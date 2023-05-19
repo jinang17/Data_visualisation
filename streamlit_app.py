@@ -187,7 +187,7 @@ if side == "Home":
             st.pyplot(fig)
 
     elif selected_plot.startswith("Linear Regression - Device"):
-                    # Read the CSV file
+                        # Read the CSV file
             data = pd.read_csv('dataset.csv')
 
             # Get unique device IDs
@@ -207,7 +207,7 @@ if side == "Home":
             time_numeric = pd.to_numeric(time)
 
             # Reshape the time data to match the expected input shape for Linear Regression
-            X = time_numeric.values.reshape(-1, 1)
+            X = time_numeric.values.reshape((-1, 1))  # Reshape to a 2D array
             y = total_rotations.values
 
             # Create a Linear Regression model
@@ -219,17 +219,20 @@ if side == "Home":
             # Predict the total rotations using the linear regression model
             predictions = model.predict(X)
 
+            # Create a new figure and axes for the plot
+            fig, ax = plt.subplots(figsize=(12, 6))
+
             # Plot the actual data and the linear regression line
-            plt.figure(figsize=(12, 6))
-            plt.scatter(time, total_rotations, label='Actual Data')
-            plt.plot(time, predictions, color='red', label='Linear Regression')
-            plt.xlabel('Time')
-            plt.ylabel('Total Rotations')
-            plt.legend()
-            plt.title(f'Linear Regression - Device {device_selection}')
+            ax.scatter(time, total_rotations, label='Actual Data')
+            ax.plot(time, predictions, color='red', label='Linear Regression')
+            ax.set_xlabel('Time')
+            ax.set_ylabel('Total Rotations')
+            ax.legend()
+            ax.set_title(f'Linear Regression - Device {device_selection}')
 
             # Convert the Matplotlib figure to Streamlit format
-            st.pyplot(plt)
+            st.pyplot(fig)
+
             pass
 
 
